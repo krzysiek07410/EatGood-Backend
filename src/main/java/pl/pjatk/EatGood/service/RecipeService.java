@@ -1,21 +1,43 @@
 package pl.pjatk.EatGood.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.pjatk.EatGood.domain.Recipe;
+import pl.pjatk.EatGood.domain.GenericRecipe;
+import pl.pjatk.EatGood.domain.GenericRecipeList;
 
 @Service
 public class RecipeService {
-    private static final String RESOURCE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes";
-    private static final String APP_KEY = "8f550b7fa2msha9a927ff991988cp11574ajsn2b82d10d2ca7";
+    @Value("${spoonacular.url}")
+    private String apiUrl;
+
+    @Value("${spoonacular.key.name}")
+    private String apiKeyName;
+
+    @Value("${spoonacular.key.value}")
+    private String apiKeyValue;
+
+    @Value("${spoonacular.host.name}")
+    private String hostName;
+
+    @Value("${spoonacular.host.value}")
+    private String hostValue;
+
     private final RestTemplate restTemplate;
 
     public RecipeService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public ResponseEntity<Recipe> getRecipe(String query) {
-        return restTemplate.getForEntity(RESOURCE_URL + "/complexSearch?" + "apiKey=" + APP_KEY + "&query=" + query, Recipe.class);
+    public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
+        return restTemplate.exchange(apiUrl + "/recipes/complexSearch?query=" + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
     }
 }
