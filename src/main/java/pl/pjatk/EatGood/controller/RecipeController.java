@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pjatk.EatGood.domain.GenericRecipe;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
+import pl.pjatk.EatGood.domain.RecipeList;
 import pl.pjatk.EatGood.service.RecipeService;
 
 import java.util.List;
@@ -21,5 +22,10 @@ public class RecipeController {
     @GetMapping("/getRecipes")
     public ResponseEntity<GenericRecipeList> getRecipes(@RequestParam String query) {
         return recipeService.getRecipesByQuery(query);
+    }
+
+    @GetMapping("/getRecipesInformation")
+    public ResponseEntity<Recipe[]> getRecipesInformation(@RequestParam String ids) {
+        return recipeService.getRecipesInformation(ids);
     }
 }
