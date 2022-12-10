@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.pjatk.EatGood.domain.GenericRecipe;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
+import pl.pjatk.EatGood.domain.Recipe;
+import pl.pjatk.EatGood.domain.RecipeList;
 
 @Service
 public class RecipeService {
@@ -39,5 +41,13 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
         return restTemplate.exchange(apiUrl + "/recipes/complexSearch?query=" + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+    }
+
+    public ResponseEntity<Recipe[]> getRecipesInformation(String ids) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        return restTemplate.exchange(apiUrl + "/recipes/informationBulk?ids=" + ids, HttpMethod.GET, requestEntity, Recipe[].class);
     }
 }
