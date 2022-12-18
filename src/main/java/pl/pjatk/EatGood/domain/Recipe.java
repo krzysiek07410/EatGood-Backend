@@ -1,11 +1,14 @@
 package pl.pjatk.EatGood.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class Recipe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //czy na pewno potrzebne?
     private Integer id;
     private String title;
     @Column(columnDefinition = "TEXT")
@@ -15,10 +18,13 @@ public class Recipe {
     private String image;
     private int readyInMinutes;
     private int servings;
-    @Enumerated(EnumType.STRING)
-    private Cuisines cuisines;
+//    @ElementCollection(targetClass = Cuisines.class)
+//    @Enumerated(EnumType.STRING)
+//    @CollectionTable(name = "recipe_cuisines", joinColumns = @JoinColumn(name = "recipe_id"))
+//    @Column(name="cuisines")
+//    private Collection<Cuisines> cuisines;
 
-    public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes, int servings, Cuisines cuisines) {
+    public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes, int servings) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -26,7 +32,7 @@ public class Recipe {
         this.image = image;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
-        this.cuisines = cuisines;
+//        this.cuisines = cuisines;
     }
 
     public Recipe() {
@@ -87,15 +93,7 @@ public class Recipe {
     public void setServings(int servings) {
         this.servings = servings;
     }
-
-    public Cuisines getCuisines() {
-        return cuisines;
-    }
-
-    public void setCuisines(Cuisines cuisines) {
-        this.cuisines = cuisines;
-    }
-
+    
     @Override
     public String toString() {
         return "Recipe{" +
@@ -106,7 +104,6 @@ public class Recipe {
                 ", image='" + image + '\'' +
                 ", readyInMinutes=" + readyInMinutes +
                 ", servings=" + servings +
-                ", cuisines=" + cuisines +
                 '}';
     }
 }
