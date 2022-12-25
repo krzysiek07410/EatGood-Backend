@@ -2,13 +2,12 @@ package pl.pjatk.EatGood.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.pjatk.EatGood.domain.GenericRecipe;
-import pl.pjatk.EatGood.domain.GenericRecipeList;
-import pl.pjatk.EatGood.domain.Recipe;
-import pl.pjatk.EatGood.domain.RecipeList;
+import pl.pjatk.EatGood.domain.*;
 import pl.pjatk.EatGood.service.RecipeService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/recipe")
