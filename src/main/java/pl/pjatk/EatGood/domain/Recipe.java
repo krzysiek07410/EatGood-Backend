@@ -3,28 +3,35 @@ package pl.pjatk.EatGood.domain;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
 public class Recipe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //czy na pewno potrzebne?
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) //czy na pewno potrzebne?
     private Integer id;
     private String title;
-    @Column(columnDefinition = "TEXT")
+//    @Column(columnDefinition = "TEXT")
     private String summary;
-    @Column(columnDefinition = "TEXT")
+//    @Column(columnDefinition = "TEXT")
     private String instructions;
     private String image;
     private int readyInMinutes;
     private int servings;
+    private List<Cuisines> cuisines;
 //    @ElementCollection(targetClass = Cuisines.class)
 //    @Enumerated(EnumType.STRING)
 //    @CollectionTable(name = "recipe_cuisines", joinColumns = @JoinColumn(name = "recipe_id"))
 //    @Column(name="cuisines")
 //    private Collection<Cuisines> cuisines;
 
-    public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes, int servings) {
+    public Recipe() {
+    }
+
+    public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes,
+                  int servings, String[] cuisines) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -32,10 +39,14 @@ public class Recipe {
         this.image = image;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
-//        this.cuisines = cuisines;
+        this.cuisines = stringsToEnums(cuisines);
     }
 
-    public Recipe() {
+    private List<Cuisines> stringsToEnums(String[] cuisinesStrings) {
+        return Arrays.stream(cuisinesStrings)
+                .map(String::toUpperCase)
+                .map(Cuisines::valueOf)
+                .collect(Collectors.toList());
     }
 
     public Integer getId() {
@@ -93,17 +104,25 @@ public class Recipe {
     public void setServings(int servings) {
         this.servings = servings;
     }
-    
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", summary='" + summary + '\'' +
-                ", instructions='" + instructions + '\'' +
-                ", image='" + image + '\'' +
-                ", readyInMinutes=" + readyInMinutes +
-                ", servings=" + servings +
-                '}';
+
+    public List<Cuisines> getCuisines() {
+        return cuisines;
     }
+
+    public void setCuisines(String[] cuisines) {
+        this.cuisines = stringsToEnums(cuisines);
+    }
+
+    //    @Override
+//    public String toString() {
+//        return "Recipe{" +
+//                "id=" + id +
+//                ", title='" + title + '\'' +
+//                ", summary='" + summary + '\'' +
+//                ", instructions='" + instructions + '\'' +
+//                ", image='" + image + '\'' +
+//                ", readyInMinutes=" + readyInMinutes +
+//                ", servings=" + servings +
+//                '}';
+//    }
 }
