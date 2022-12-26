@@ -12,6 +12,8 @@ import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
 
+import java.util.ArrayList;
+
 @Service
 public class RecipeService {
     @Value("${spoonacular.url}")
@@ -49,5 +51,13 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         return restTemplate.exchange(apiUrl + "/recipes/informationBulk?ids=" + ids, HttpMethod.GET, requestEntity, Recipe[].class);
+    }
+
+    public ResponseEntity<RecipeList> getRandomRecipes(int recipeCount) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        return restTemplate.exchange(apiUrl + "/recipes/random?number=" + recipeCount, HttpMethod.GET, requestEntity, RecipeList.class);
     }
 }

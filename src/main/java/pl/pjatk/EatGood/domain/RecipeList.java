@@ -1,20 +1,20 @@
 package pl.pjatk.EatGood.domain;
 
 public class RecipeList {
-    private Recipe[] results;
+    private Recipe[] recipes;
 
     public RecipeList() {
     }
 
     public RecipeList(Recipe[] results) {
-        this.results = results;
+        this.recipes = results;
     }
 
-    public Recipe[] getResults() {
-        return results;
+    public Recipe[] getRecipes() {
+        return recipes;
     }
 
-    public void setResults(Recipe[] results) {
-        this.results = results;
+    public void setRecipes(Recipe[] recipes) {
+        this.recipes = recipes;
     }
 }

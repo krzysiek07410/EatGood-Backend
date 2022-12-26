@@ -27,4 +27,9 @@ public class RecipeController {
     public ResponseEntity<Recipe[]> getRecipesInformation(@RequestParam String ids) {
         return recipeService.getRecipesInformation(ids);
     }
+
+    @GetMapping("/getRandomRecipes")
+    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount) {
+        return recipeService.getRandomRecipes(recipeCount);
+    }
 }
