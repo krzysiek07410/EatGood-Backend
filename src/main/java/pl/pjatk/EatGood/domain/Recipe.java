@@ -20,8 +20,8 @@ public class Recipe {
     private String image;
     private int readyInMinutes;
     private int servings;
-    private List<Cuisines> cuisines;
-    private List<Diets> diets;
+    private List<String> cuisines;
+    private List<String> diets;
 //    @ElementCollection(targetClass = Cuisines.class)
 //    @Enumerated(EnumType.STRING)
 //    @CollectionTable(name = "recipe_cuisines", joinColumns = @JoinColumn(name = "recipe_id"))
@@ -32,7 +32,7 @@ public class Recipe {
     }
 
     public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes,
-                  int servings, String[] cuisines, String[] diets) {
+                  int servings, List<String> cuisines, List<String> diets) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -40,22 +40,8 @@ public class Recipe {
         this.image = image;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
-        this.cuisines = stringsToEnumsCuisines(cuisines);
-        this.diets = stringsToEnumsDiets(diets);
-    }
-
-    private List<Cuisines> stringsToEnumsCuisines(String[] cuisinesStrings) {
-        return Arrays.stream(cuisinesStrings)
-                .map(String::toUpperCase)
-                .map(Cuisines::valueOf)
-                .collect(Collectors.toList());
-    }
-
-    private List<Diets> stringsToEnumsDiets(String[] dietsStrings) {
-        return Arrays.stream(dietsStrings)
-                .map(String::toUpperCase)
-                .map(Diets::valueOf)
-                .collect(Collectors.toList());
+        this.cuisines = cuisines;
+        this.diets = diets;
     }
 
     public Integer getId() {
@@ -114,20 +100,20 @@ public class Recipe {
         this.servings = servings;
     }
 
-    public List<Cuisines> getCuisines() {
+    public List<String> getCuisines() {
         return cuisines;
     }
 
-    public void setCuisines(String[] cuisines) {
-        this.cuisines = stringsToEnumsCuisines(cuisines);
+    public void setCuisines(List<String> cuisines) {
+        this.cuisines = cuisines;
     }
 
-    public List<Diets> getDiets() {
+    public List<String> getDiets() {
         return diets;
     }
 
-    public void setDiets(String[] diets) {
-        this.diets = stringsToEnumsDiets(diets);
+    public void setDiets(List<String> diets) {
+        this.diets = diets;
     }
 
     //    @Override
