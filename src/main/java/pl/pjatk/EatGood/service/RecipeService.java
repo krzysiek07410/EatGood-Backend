@@ -87,14 +87,4 @@ public class RecipeService {
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         return restTemplate.exchange(apiUrl + "/recipes/random?number=" + recipeCount, HttpMethod.GET, requestEntity, RecipeList.class);
     }
-
-    public ResponseEntity<String> getQuotaOfPointsLeft(HttpHeaders headers) {
-        headers.set(apiKeyName, apiKeyValue);
-        headers.set(hostName, hostValue);
-        HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
-//        List quotaOfPointsLeft = headers.get("X-API-Quota-Left");
-        System.out.println("kurwa" + headers.toString());
-//        return new ResponseEntity<List>(quotaOfPointsLeft, HttpStatus.OK);
-        return new ResponseEntity<String>("abc", HttpStatus.OK);
-    }
 }

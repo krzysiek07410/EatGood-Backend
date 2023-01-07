@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -48,7 +49,7 @@ public class RecipeController {
     }
 
     @GetMapping("/getRandomRecipes")
-    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount, @RequestHeader HttpHeaders headers, HttpServletRequest request) {
+    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount, @RequestHeader Map<String, String> headers, HttpServletRequest request) {
 //        System.out.println(headers);
 //        Enumeration<String> headerNames = request.getHeaderNames();
 //        while (headerNames.hasMoreElements()) {
@@ -56,23 +57,11 @@ public class RecipeController {
 //            String headerValue = request.getHeader(headerName);
 //            System.out.println(headerName + ": " + headerValue);
 //        }
-        System.out.println(request.getHeader("X-Ratelimit-Classifications-Remaining"));
+//        System.out.println(headers);
+        headers.forEach((key, value) -> {
+            System.out.println((String.format("Header '%s' = %s", key, value)));
+        });
+
         return recipeService.getRandomRecipes(recipeCount);
-    }
-
-    @GetMapping("/getQuotaOfPointsLeft")
-    public ResponseEntity<String> getQuotaOfPointsLeft(@RequestHeader HttpHeaders headers) {
-        return recipeService.getQuotaOfPointsLeft(headers);
-    }
-
-    @GetMapping("/pointsLeft")
-    public ResponseEntity<String> handleRequest(HttpServletRequest request) {
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            String headerValue = request.getHeader(headerName);
-            System.out.println(headerName + ": " + headerValue);
-        }
-        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
