@@ -1,11 +1,15 @@
 package pl.pjatk.EatGood.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pjatk.EatGood.domain.*;
 import pl.pjatk.EatGood.service.RecipeService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +32,47 @@ public class RecipeController {
         return recipeService.getRecipesInformation(ids);
     }
 
+    @GetMapping("/getRecipesByCalories")
+    public ResponseEntity<GenericRecipeList> getRecipesByCalories(@RequestParam(required = false, defaultValue = "0") int min, @RequestParam(required = false, defaultValue = "0") int max) {
+        return recipeService.getRecipesByCalories(min, max);
+    }
+
+    @GetMapping("/getRecipesByCuisine")
+    public ResponseEntity<GenericRecipeList> getRecipesByCuisine(@RequestParam String cuisine) {
+        return recipeService.getRecipesByCuisine(cuisine);
+    }
+
+    @GetMapping("/getRecipesByDiet")
+    public ResponseEntity<GenericRecipeList> getRecipesByDiet(@RequestParam String diet) {
+        return recipeService.getRecipesByCuisine(diet);
+    }
+
     @GetMapping("/getRandomRecipes")
-    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount) {
+    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount, @RequestHeader HttpHeaders headers, HttpServletRequest request) {
+//        System.out.println(headers);
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        while (headerNames.hasMoreElements()) {
+//            String headerName = headerNames.nextElement();
+//            String headerValue = request.getHeader(headerName);
+//            System.out.println(headerName + ": " + headerValue);
+//        }
+        System.out.println(request.getHeader("X-Ratelimit-Classifications-Remaining"));
         return recipeService.getRandomRecipes(recipeCount);
+    }
+
+    @GetMapping("/getQuotaOfPointsLeft")
+    public ResponseEntity<String> getQuotaOfPointsLeft(@RequestHeader HttpHeaders headers) {
+        return recipeService.getQuotaOfPointsLeft(headers);
+    }
+
+    @GetMapping("/pointsLeft")
+    public ResponseEntity<String> handleRequest(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            System.out.println(headerName + ": " + headerValue);
+        }
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
