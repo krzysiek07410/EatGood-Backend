@@ -1,9 +1,9 @@
 package pl.pjatk.EatGood.domain;
 
-import javax.persistence.Id;
+//import javax.persistence.Id;
 
 public class GenericRecipe {
-    @Id
+//    @Id
     private Integer id;
     private String title;
     private String image;
