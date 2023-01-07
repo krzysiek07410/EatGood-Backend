@@ -44,7 +44,7 @@ public class RecipeController {
 
     @GetMapping("/getRecipesByDiet")
     public ResponseEntity<GenericRecipeList> getRecipesByDiet(@RequestParam String diet) {
-        return recipeService.getRecipesByCuisine(diet);
+        return recipeService.getRecipesByDiet(diet);
     }
 
     @GetMapping("/getRandomRecipes")
