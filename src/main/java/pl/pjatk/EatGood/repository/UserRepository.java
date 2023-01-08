@@ -2,8 +2,8 @@ package pl.pjatk.EatGood.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.pjatk.EatGood.domain.FavouriteRecipe;
+import pl.pjatk.EatGood.domain.User;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<FavouriteRecipe, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 }

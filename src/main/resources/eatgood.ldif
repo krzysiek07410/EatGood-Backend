@@ -1,0 +1,36 @@
+dn: dc=eatgood,dc=local
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: eatgood.local
+dc: eatgood
+
+dn: ou=Users,dc=eatgood,dc=local
+objectClass: organizationalUnit
+ou: Users
+
+dn: cn=s00001,ou=Users,dc=eatgood,dc=local
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: s00001
+uid: s00001
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/s00001
+userPassword: asdasd
+loginShell: /bin/bash
+
+dn: cn=s22621,ou=Users,dc=eatgood,dc=local
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: s22621
+uid: s22621
+uidNumber: 10002
+gidNumber: 10002
+homeDirectory: /home/s22621
+userPassword: s22621
+loginShell: bin/bash

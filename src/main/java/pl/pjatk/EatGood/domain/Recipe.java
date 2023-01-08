@@ -1,32 +1,17 @@
 package pl.pjatk.EatGood.domain;
 
-//import org.hibernate.annotations.Type;
-
-//import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Recipe {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) //czy na pewno potrzebne?
     private Integer id;
     private String title;
-//    @Column(columnDefinition = "TEXT")
     private String summary;
-//    @Column(columnDefinition = "TEXT")
     private String instructions;
     private String image;
     private int readyInMinutes;
     private int servings;
     private List<String> cuisines;
     private List<String> diets;
-//    @ElementCollection(targetClass = Cuisines.class)
-//    @Enumerated(EnumType.STRING)
-//    @CollectionTable(name = "recipe_cuisines", joinColumns = @JoinColumn(name = "recipe_id"))
-//    @Column(name="cuisines")
-//    private Collection<Cuisines> cuisines;
 
     public Recipe() {
     }

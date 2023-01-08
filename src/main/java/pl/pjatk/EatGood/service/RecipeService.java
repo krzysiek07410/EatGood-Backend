@@ -1,15 +1,16 @@
 package pl.pjatk.EatGood.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.pjatk.EatGood.domain.GenericRecipe;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
-
-import java.util.List;
 
 @Service
 public class RecipeService {
