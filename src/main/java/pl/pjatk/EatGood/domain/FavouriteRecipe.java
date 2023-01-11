@@ -3,6 +3,7 @@ package pl.pjatk.EatGood.domain;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class FavouriteRecipe extends GenericRecipe {
@@ -10,9 +11,10 @@ public class FavouriteRecipe extends GenericRecipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFavRecipe;
     @ManyToMany(mappedBy = "favouriteRecipeList")
-    private List<User> userList;
+    private Set<User> userList;
 
-    public FavouriteRecipe(Integer id, String title, String image, String imageType, Integer idFavRecipe, List<User> userList) {
+    public FavouriteRecipe(Integer id, String title, String image, String imageType, Integer idFavRecipe,
+                           Set<User> userList) {
         super(id, title, image, imageType);
         this.idFavRecipe = idFavRecipe;
         this.userList = userList;
@@ -28,4 +30,13 @@ public class FavouriteRecipe extends GenericRecipe {
     public void setIdFavRecipe(Integer idFavRecipe) {
         this.idFavRecipe = idFavRecipe;
     }
+
+    public Set<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Set<User> userList) {
+        this.userList = userList;
+    }
+
 }
