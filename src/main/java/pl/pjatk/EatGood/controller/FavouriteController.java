@@ -3,10 +3,14 @@ package pl.pjatk.EatGood.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pjatk.EatGood.domain.FavouriteRecipe;
+import pl.pjatk.EatGood.domain.User;
 import pl.pjatk.EatGood.service.FavouriteService;
 
+import java.security.Principal;
+import java.util.Set;
+
 @RestController
-@RequestMapping("/favrec")
+@RequestMapping("/favourite")
 public class FavouriteController {
 
     private final FavouriteService favouriteService;
@@ -20,15 +24,50 @@ public class FavouriteController {
         return ResponseEntity.ok("Test");
     }
 
-
-    @PostMapping("/save")
+    @PostMapping("/recipe/save")
     public ResponseEntity<FavouriteRecipe> saveFavouriteRecipe(@RequestBody FavouriteRecipe favouriteRecipeToSave) {
         return ResponseEntity.ok(favouriteService.saveFavouriteRecipe(favouriteRecipeToSave));
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<Void> deleteFavouriteRecipe(@RequestBody Integer id) {
-        favouriteService.deleteFavourtieRecipe(id);
+    @GetMapping("/recipe/delete")
+    public ResponseEntity<Void> deleteFavouriteRecipe(@RequestParam Integer id) {
+        favouriteService.deleteFavouriteRecipe(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recipe/find")
+    public ResponseEntity<FavouriteRecipe> getFavouriteRecipeById(@RequestParam Integer id) {
+        return ResponseEntity.ok(favouriteService.findFavouriteRecipeById(id));
+    }
+
+    @GetMapping("/user/save")
+    public ResponseEntity<User> saveUser(Principal principal) {
+        return ResponseEntity.ok(favouriteService.saveUser(principal));
+    }
+
+    @GetMapping("/user/delete")
+    public ResponseEntity<Void> deleteUser(@RequestParam Integer id) {
+        favouriteService.deleteUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user/find")
+    public ResponseEntity<User> getUserById(@RequestParam Integer id) {
+        return ResponseEntity.ok(favouriteService.findUserById(id));
+    }
+
+    @GetMapping("/user/addrecipe")
+    public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId, Principal principal) {
+        return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId, principal));
+    }
+
+    @GetMapping("/user/removerecipe")
+    public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId, Principal principal) {
+        return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId, principal));
+    }
+
+    @GetMapping("/user/getrecipes")
+    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes(Principal principal) {
+        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes(principal));
     }
 }
