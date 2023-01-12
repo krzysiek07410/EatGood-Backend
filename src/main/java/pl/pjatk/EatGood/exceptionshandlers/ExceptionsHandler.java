@@ -8,7 +8,6 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import java.net.ConnectException;
 
-
 @RestControllerAdvice
 public class ExceptionsHandler {
     @ExceptionHandler(HttpClientErrorException.NotFound.class)

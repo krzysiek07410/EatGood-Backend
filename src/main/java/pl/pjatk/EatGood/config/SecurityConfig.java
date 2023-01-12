@@ -1,4 +1,4 @@
-package pl.pjatk.EatGood.ldap;
+package pl.pjatk.EatGood.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,15 +9,29 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
-public class WebSecurityConfig {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .anyRequest().fullyAuthenticated()
+                .anyRequest()
+//                .permitAll()
+//                .and()
+//                .cors()
+//                .and()
+//                .csrf()
+//                .disable();
+                .fullyAuthenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID");
 
         return http.build();
     }
