@@ -1,42 +1,31 @@
 package pl.pjatk.EatGood.domain;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class FavouriteRecipe extends GenericRecipe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idFavRecipe;
-    @ManyToMany(mappedBy = "favouriteRecipeList")
-    private Set<User> userList;
+    @ManyToMany(mappedBy = "favouriteRecipeSet")
+    @JsonBackReference
+    private Set<User> userSet;
 
-    public FavouriteRecipe(Integer id, String title, String image, String imageType, Integer idFavRecipe,
-                           Set<User> userList) {
+    public FavouriteRecipe(Integer id, String title, String image, String imageType, Set<User> userSet) {
         super(id, title, image, imageType);
-        this.idFavRecipe = idFavRecipe;
-        this.userList = userList;
+        this.userSet = userSet;
     }
 
     public FavouriteRecipe() {
     }
 
-    public Integer getIdFavRecipe() {
-        return idFavRecipe;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setIdFavRecipe(Integer idFavRecipe) {
-        this.idFavRecipe = idFavRecipe;
-    }
-
-    public Set<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(Set<User> userList) {
-        this.userList = userList;
+    public void setUserSet(Set<User> userList) {
+        this.userSet = userList;
     }
 
 }

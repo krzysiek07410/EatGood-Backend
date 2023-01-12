@@ -1,9 +1,11 @@
 package pl.pjatk.EatGood.domain;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class GenericRecipe {
+    @Id
     private Integer id;
     private String title;
     private String image;
