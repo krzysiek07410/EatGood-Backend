@@ -29,4 +29,14 @@ public class ExceptionsHandler {
     public ResponseEntity<String> connectException(ConnectException exception) {
         return ResponseEntity.status(504).body("CONNECT EXCEPTION" + exception.getLocalizedMessage());
     }
+
+    @ExceptionHandler(NotFoundFavouriteRecipeException.class)
+    public ResponseEntity<String> getFavouriteRecipeById() {
+        return ResponseEntity.status(404).body("NOT FOUND");
+    }
+
+    @ExceptionHandler(NotFoundUserException.class)
+    public ResponseEntity<String> getUserById() {
+        return ResponseEntity.status(404).body("NOT FOUND");
+    }
 }
