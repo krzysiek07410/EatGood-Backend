@@ -35,6 +35,15 @@ public class RecipeService {
         this.restTemplate = restTemplate;
     }
 
+    public RecipeService(RestTemplate restTemplate, String apiUrl, String apiKeyName, String apiKeyValue, String hostName, String hostValue) {
+        this.restTemplate = restTemplate;
+        this.apiUrl = apiUrl;
+        this.apiKeyName = apiKeyName;
+        this.apiKeyValue = apiKeyValue;
+        this.hostName = hostName;
+        this.hostValue = hostValue;
+    }
+
     public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(apiKeyName, apiKeyValue);
