@@ -32,10 +32,10 @@ class RecipeServiceTest {
     private RecipeService recipeService;
 
 
-//    @BeforeEach
-//    void setup() {
-//        recipeService = new RecipeService(restTemplate, API_URL, API_KEY_NAME, API_KEY_VALUE, HOST_NAME, HOST_VALUE);
-//    }
+    @BeforeEach
+    void setup() {
+        recipeService = new RecipeService(restTemplate, API_URL, API_KEY_NAME, API_KEY_VALUE, HOST_NAME, HOST_VALUE);
+    }
 
     @Test
     void getRecipesByQueryTest() {

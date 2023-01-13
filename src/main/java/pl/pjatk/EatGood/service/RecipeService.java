@@ -31,18 +31,23 @@ public class RecipeService {
 
     private final RestTemplate restTemplate;
 
-    public RecipeService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-//    public RecipeService(RestTemplate restTemplate, String apiUrl, String apiKeyName, String apiKeyValue, String hostName, String hostValue) {
+//    public RecipeService(RestTemplate restTemplate) {
 //        this.restTemplate = restTemplate;
-//        this.apiUrl = apiUrl;
-//        this.apiKeyName = apiKeyName;
-//        this.apiKeyValue = apiKeyValue;
-//        this.hostName = hostName;
-//        this.hostValue = hostValue;
 //    }
+
+    public RecipeService(RestTemplate restTemplate,
+                         @Value("${spoonacular.url}") String apiUrl,
+                         @Value("${spoonacular.key.name}") String apiKeyName,
+                         @Value("${spoonacular.key.value}") String apiKeyValue,
+                         @Value("${spoonacular.host.value}") String hostName,
+                         @Value("${spoonacular.host.value}") String hostValue) {
+        this.restTemplate = restTemplate;
+        this.apiUrl = apiUrl;
+        this.apiKeyName = apiKeyName;
+        this.apiKeyValue = apiKeyValue;
+        this.hostName = hostName;
+        this.hostValue = hostValue;
+    }
 
     public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
         HttpHeaders headers = new HttpHeaders();
