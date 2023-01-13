@@ -86,10 +86,18 @@ class RecipeServiceTest {
         assertEquals(expectedResponse, response);
     }
 
-//    @Test
-//    void getRecipesByCuisineTest() {
-//        String cuisine = "italian";
-//        String expectedUrl = API_URL + "/recipes/complexSearch?cuisine=italian";
-//        ResponseEntity<GenericRecipeList> expectedResponse = new Response
-//    }
+    @Test
+    void getRecipesByCuisineTest() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(API_KEY_NAME, API_KEY_VALUE);
+        headers.set(HOST_NAME, HOST_VALUE);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        String cuisine = "italian";
+        String expectedUrl = API_URL + "/recipes/complexSearch?cuisine=italian";
+        ResponseEntity<GenericRecipeList> expectedResponse = new ResponseEntity<>(new GenericRecipeList(), HttpStatus.OK);
+        when(restTemplate.exchange(expectedUrl, HttpMethod.GET, requestEntity, GenericRecipeList.class)).thenReturn(expectedResponse);
+
+        ResponseEntity<GenericRecipeList> response = recipeService.getRecipesByCuisine(cuisine);
+        assertEquals(expectedResponse, response);
+    }
 }
