@@ -25,10 +25,7 @@ public class SecurityConfig {
                 .anyRequest()
                 .permitAll()
                 .and()
-                .cors()
-                .and()
-                .csrf()
-                .disable();
+                .cors();
 //                .authorizeHttpRequests()
 //                .anyRequest()
 //                .fullyAuthenticated()
