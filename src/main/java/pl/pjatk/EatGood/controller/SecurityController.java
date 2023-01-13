@@ -7,12 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
-@Controller
+@RestController
 public class SecurityController {
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "index";
+//    }
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "Welcome to the home page!";
     }
 
     @GetMapping("/username")

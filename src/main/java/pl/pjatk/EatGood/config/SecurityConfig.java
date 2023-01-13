@@ -21,29 +21,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .authorizeHttpRequests()
-//                .anyRequest()
-//                .permitAll()
-//                .and()
-//                .cors()
-//                .and()
-//                .csrf()
-//                .disable();
                 .authorizeHttpRequests()
                 .anyRequest()
-                .fullyAuthenticated()
+                .permitAll()
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/index.html")
+                .cors()
                 .and()
-                .sessionManagement()
-                .invalidSessionUrl("/")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("JSESSIONID")
-                .and()
-                .cors();
+                .csrf()
+                .disable();
+//                .authorizeHttpRequests()
+//                .anyRequest()
+//                .fullyAuthenticated()
+//                .and()
+//                .formLogin()
+//                .defaultSuccessUrl("/index.html")
+//                .and()
+//                .sessionManagement()
+//                .invalidSessionUrl("/")
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .deleteCookies("JSESSIONID")
+//                .and()
+//                .cors();
 
         return http.build();
     }
