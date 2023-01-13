@@ -1,6 +1,5 @@
 package pl.pjatk.EatGood.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,31 +14,35 @@ import pl.pjatk.EatGood.domain.RecipeList;
 
 @Service
 public class RecipeService {
+    @Value("${spoonacular.url}")
     private String apiUrl;
 
+    @Value("${spoonacular.key.name}")
     private String apiKeyName;
 
+    @Value("${spoonacular.key.value}")
     private String apiKeyValue;
 
+    @Value("${spoonacular.host.name}")
     private String hostName;
 
+    @Value("${spoonacular.host.value}")
     private String hostValue;
 
     private final RestTemplate restTemplate;
 
-    public RecipeService(RestTemplate restTemplate,
-                         @Value("${spoonacular.url}") String apiUrl,
-                         @Value("${spoonacular.key.value}") String apiKeyName,
-                         @Value("${spoonacular.key.value}") String apiKeyValue,
-                         @Value("${spoonacular.host.name}") String hostName,
-                         @Value("${spoonacular.host.value}") String hostValue) {
+    public RecipeService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.apiUrl = apiUrl;
-        this.apiKeyName = apiKeyName;
-        this.apiKeyValue = apiKeyValue;
-        this.hostName = hostName;
-        this.hostValue = hostValue;
     }
+
+//    public RecipeService(RestTemplate restTemplate, String apiUrl, String apiKeyName, String apiKeyValue, String hostName, String hostValue) {
+//        this.restTemplate = restTemplate;
+//        this.apiUrl = apiUrl;
+//        this.apiKeyName = apiKeyName;
+//        this.apiKeyValue = apiKeyValue;
+//        this.hostName = hostName;
+//        this.hostValue = hostValue;
+//    }
 
     public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
         HttpHeaders headers = new HttpHeaders();

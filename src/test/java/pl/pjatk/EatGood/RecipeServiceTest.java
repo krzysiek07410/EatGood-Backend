@@ -5,11 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.service.RecipeService;
+
+import java.io.FileInputStream;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -27,10 +32,10 @@ class RecipeServiceTest {
     private RecipeService recipeService;
 
 
-    @BeforeEach
-    void setup() {
-        recipeService = new RecipeService(restTemplate, API_URL, API_KEY_NAME, API_KEY_VALUE, HOST_NAME, HOST_VALUE);
-    }
+//    @BeforeEach
+//    void setup() {
+//        recipeService = new RecipeService(restTemplate, API_URL, API_KEY_NAME, API_KEY_VALUE, HOST_NAME, HOST_VALUE);
+//    }
 
     @Test
     void getRecipesByQueryTest() {
