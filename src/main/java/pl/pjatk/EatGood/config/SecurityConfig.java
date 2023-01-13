@@ -59,16 +59,16 @@ public class SecurityConfig {
         return source;
     }
 
-    @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .ldapAuthentication()
-                .userDnPatterns("cn={0},ou=Users")
-                .contextSource()
-                .url("ldap://localhost:8389/dc=eatgood,dc=local")
-                .and()
-                .passwordCompare()
-//                .passwordEncoder(new BCryptPasswordEncoder())
-                .passwordAttribute("userPassword");
-    }
+//    @Autowired
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .ldapAuthentication()
+//                .userDnPatterns("cn={0},ou=Users")
+//                .contextSource()
+//                .url("ldap://localhost:8389/dc=eatgood,dc=local")
+//                .and()
+//                .passwordCompare()
+////                .passwordEncoder(new BCryptPasswordEncoder())
+//                .passwordAttribute("userPassword");
+//    }
 }
