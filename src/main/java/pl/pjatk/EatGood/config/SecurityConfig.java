@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .fullyAuthenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/index.html")
                 .and()
                 .sessionManagement()
                 .invalidSessionUrl("/")
