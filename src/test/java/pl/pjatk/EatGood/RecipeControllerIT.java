@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters=false)
 public class RecipeControllerIT {
     @Autowired
     private MockMvc mockMvc;
