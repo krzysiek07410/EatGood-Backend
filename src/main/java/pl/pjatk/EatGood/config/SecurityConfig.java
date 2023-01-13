@@ -21,51 +21,59 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests()
-                .anyRequest()
-                .permitAll()
-                .and()
-                .cors();
 //                .authorizeHttpRequests()
 //                .anyRequest()
-//                .fullyAuthenticated()
-//                .and()
-//                .formLogin()
-//                .defaultSuccessUrl("/index.html")
-//                .and()
-//                .sessionManagement()
-//                .invalidSessionUrl("/")
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .deleteCookies("JSESSIONID")
+//                .permitAll()
 //                .and()
 //                .cors();
+                .authorizeHttpRequests()
+                .anyRequest()
+                .fullyAuthenticated()
+                .and()
+                .formLogin()
+                .defaultSuccessUrl("/index.html")
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID")
+                .and()
+                .cors();
 
         return http.build();
     }
 
     // https://docs.spring.io/spring-security/site/docs/4.2.x/reference/html/cors.html
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://172.19.3.68:5173"));
+        configuration.setAllowedMethods(List.of("HEAD",
+                "GET", "POST", "PUT", "DELETE", "PATCH"));
+        // setAllowCredentials(true) is important, otherwise:
+        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*'
+        // when the request's credentials mode is 'include'.
+        configuration.setAllowCredentials(true);
+        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+        // will fail with 403 Invalid CORS request
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-//    @Autowired
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .ldapAuthentication()
-//                .userDnPatterns("cn={0},ou=Users")
-//                .contextSource()
-//                .url("ldap://localhost:8389/dc=eatgood,dc=local")
-//                .and()
-//                .passwordCompare()
-////                .passwordEncoder(new BCryptPasswordEncoder())
-//                .passwordAttribute("userPassword");
-//    }
+    @Autowired
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .ldapAuthentication()
+                .userDnPatterns("cn={0},ou=Users")
+                .contextSource()
+                .url("ldap://localhost:8389/dc=eatgood,dc=local")
+                .and()
+                .passwordCompare()
+//                .passwordEncoder(new BCryptPasswordEncoder())
+                .passwordAttribute("userPassword");
+    }
 }
