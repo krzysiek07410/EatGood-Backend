@@ -1,5 +1,6 @@
 package pl.pjatk.EatGood.service;
 
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,8 +13,7 @@ import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class RecipeService {
@@ -173,5 +173,30 @@ public class RecipeService {
         ResponseEntity<RecipeList> response = restTemplate.exchange(apiUrl + "/recipes/random?number=1",
                 HttpMethod.GET, requestEntity, RecipeList.class);
         return response.getBody();
+    }
+
+    public LinkedHashMap<String, Integer> getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl +
+                "/recipes/complexSearch?query=xyz", HttpMethod.GET, requestEntity, GenericRecipeList.class);
+        LinkedHashMap<String, Integer> mapLimits = new LinkedHashMap<>();
+
+        List<String> tempList = response.getHeaders().get("x-ratelimit-requests-limit");
+        mapLimits.put("x-ratelimit-requests-limit", Integer.parseInt(tempList.get(0)));
+        tempList = response.getHeaders().get("x-ratelimit-requests-remaining");
+        mapLimits.put("x-ratelimit-requests-remaining", Integer.parseInt(tempList.get(0)));
+        tempList = response.getHeaders().get("x-ratelimit-results-limit");
+        mapLimits.put("x-ratelimit-results-limit", Integer.parseInt(tempList.get(0)));
+        tempList = response.getHeaders().get("x-ratelimit-results-remaining");
+        mapLimits.put("x-ratelimit-results-remaining", Integer.parseInt(tempList.get(0)));
+        tempList = response.getHeaders().get("x-ratelimit-tinyrequests-limit");
+        mapLimits.put("x-ratelimit-tinyrequests-limit", Integer.parseInt(tempList.get(0)));
+        tempList = response.getHeaders().get("x-ratelimit-tinyrequests-remaining");
+        mapLimits.put("x-ratelimit-tinyrequests-remaining", Integer.parseInt(tempList.get(0)));
+
+        return mapLimits;
     }
 }
