@@ -1,5 +1,6 @@
 package pl.pjatk.EatGood.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,16 +11,17 @@ import java.util.Collections;
 @Configuration
 public class JwtFilterConfig {
 
-    private final User currentUser;
+    @Value("${signing.key}")
+    private String signingKey;
 
-    public JwtFilterConfig(User currentUser) {
-        this.currentUser = currentUser;
+    public JwtFilterConfig(@Value("${signing.key}") String signingKey) {
+        this.signingKey = signingKey;
     }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new JwtFilter(currentUser));
+        filterRegistrationBean.setFilter(new JwtFilter(signingKey));
         filterRegistrationBean.setUrlPatterns(Collections.singleton("/api/*"));
         return filterRegistrationBean;
     }

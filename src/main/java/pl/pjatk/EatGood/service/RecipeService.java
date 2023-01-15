@@ -1,6 +1,5 @@
 package pl.pjatk.EatGood.service;
 
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +12,8 @@ import pl.pjatk.EatGood.domain.GenericRecipeList;
 import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 @Service
 public class RecipeService {
@@ -156,7 +156,70 @@ public class RecipeService {
         return response.getBody();
     }
 
+    public GenericRecipeList getRecipesByQueryAndDiet(String query, String diet) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?query="
+                + query + "&diet=" + diet, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+        return response.getBody();
+    }
 
+    public GenericRecipeList getRecipesByQueryAndCalories(String query, long min, long max) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        String url = new String();
+        if (min == 0) {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&maxCalories=" + max;
+        } else if (max == 0) {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&inCalories=" + min;
+        } else {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&inCalories=" + min + "&maxCalories="  + max;
+        }
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                GenericRecipeList.class);
+        return response.getBody();
+    }
+
+    public GenericRecipeList getRecipesByDietAndCalories(String diet, long min, long max) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        String url = new String();
+        if (min == 0) {
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&maxCalories=" + max;
+        } else if (max == 0) {
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&inCalories=" + min;
+        } else {
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&inCalories=" + min + "&maxCalories="  + max;
+        }
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                GenericRecipeList.class);
+        return response.getBody();
+    }
+
+    public GenericRecipeList getRecipesByQueryAndDietAndCalories(String query, String diet, long min, long max) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(apiKeyName, apiKeyValue);
+        headers.set(hostName, hostValue);
+        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+        String url = new String();
+        if (min == 0) {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&maxCalories=" + max;
+        } else if (max == 0) {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&inCalories=" + min;
+        } else {
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&inCalories=" + min +
+                    "&maxCalories="  + max;
+        }
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                GenericRecipeList.class);
+        return response.getBody();
+    }
 //    public ResponseEntity<RecipeList> getRandomRecipes(int recipeCount) {
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.set(apiKeyName, apiKeyValue);
