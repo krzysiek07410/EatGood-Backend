@@ -49,12 +49,23 @@ public class RecipeService {
         this.hostValue = hostValue;
     }
 
-    public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
+//    public ResponseEntity<GenericRecipeList> getRecipesByQuery(String query) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set(apiKeyName, apiKeyValue);
+//        headers.set(hostName, hostValue);
+//        HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
+//        return restTemplate.exchange(apiUrl + "/recipes/complexSearch?query=" + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+//    }
+
+    public GenericRecipeList getRecipesByQuery(String query) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(apiKeyName, apiKeyValue);
         headers.set(hostName, hostValue);
         HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
-        return restTemplate.exchange(apiUrl + "/recipes/complexSearch?query=" + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+        ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?query="
+                + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+        GenericRecipeList genericRecipeList = response.getBody();
+        return genericRecipeList;
     }
 
     public ResponseEntity<Recipe[]> getRecipesInformation(String ids) {

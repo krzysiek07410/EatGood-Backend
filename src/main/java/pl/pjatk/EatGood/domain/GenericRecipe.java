@@ -1,7 +1,7 @@
 package pl.pjatk.EatGood.domain;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class GenericRecipe {

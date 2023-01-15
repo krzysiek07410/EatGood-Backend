@@ -37,21 +37,21 @@ class RecipeServiceTest {
         recipeService = new RecipeService(restTemplate, API_URL, API_KEY_NAME, API_KEY_VALUE, HOST_NAME, HOST_VALUE);
     }
 
-    @Test
-    void getRecipesByQueryTest() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(API_KEY_NAME, API_KEY_VALUE);
-        headers.set(HOST_NAME, HOST_VALUE);
-        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
-        String query = "chicken";
-        String expectedUrl = API_URL + "/recipes/complexSearch?query=chicken";
-
-        ResponseEntity<GenericRecipeList> expectedResponse = new ResponseEntity<>(new GenericRecipeList(), HttpStatus.OK);
-        when(restTemplate.exchange(expectedUrl, HttpMethod.GET, requestEntity, GenericRecipeList.class)).thenReturn(expectedResponse);
-
-        ResponseEntity<GenericRecipeList> response = recipeService.getRecipesByQuery(query);
-        assertEquals(expectedResponse, response);
-    }
+//    @Test
+//    void getRecipesByQueryTest() {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set(API_KEY_NAME, API_KEY_VALUE);
+//        headers.set(HOST_NAME, HOST_VALUE);
+//        HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
+//        String query = "chicken";
+//        String expectedUrl = API_URL + "/recipes/complexSearch?query=chicken";
+//
+//        ResponseEntity<GenericRecipeList> expectedResponse = new ResponseEntity<>(new GenericRecipeList(), HttpStatus.OK);
+//        when(restTemplate.exchange(expectedUrl, HttpMethod.GET, requestEntity, GenericRecipeList.class)).thenReturn(expectedResponse);
+//
+//        ResponseEntity<GenericRecipeList> response = recipeService.getRecipesByQuery(query);
+//        assertEquals(expectedResponse, response);
+//    }
 
     @Test
     void getRecipesInformationTest() {

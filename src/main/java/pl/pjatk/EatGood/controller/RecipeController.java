@@ -1,6 +1,5 @@
 package pl.pjatk.EatGood.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
@@ -8,6 +7,7 @@ import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
 import pl.pjatk.EatGood.service.RecipeService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -19,9 +19,14 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+//    @GetMapping("/getRecipes")
+//    public ResponseEntity<GenericRecipeList> getRecipes(@RequestParam String query) {
+//        return recipeService.getRecipesByQuery(query);
+//    }
+
     @GetMapping("/getRecipes")
     public ResponseEntity<GenericRecipeList> getRecipes(@RequestParam String query) {
-        return recipeService.getRecipesByQuery(query);
+        return ResponseEntity.ok(recipeService.getRecipesByQuery(query));
     }
 
     @GetMapping("/getRecipesInformation")
@@ -30,7 +35,8 @@ public class RecipeController {
     }
 
     @GetMapping("/getRecipesByCalories")
-    public ResponseEntity<GenericRecipeList> getRecipesByCalories(@RequestParam(required = false, defaultValue = "0") int min, @RequestParam(required = false, defaultValue = "0") int max) {
+    public ResponseEntity<GenericRecipeList> getRecipesByCalories(@RequestParam(required = false,
+            defaultValue = "0") int min, @RequestParam(required = false, defaultValue = "0") int max) {
         return recipeService.getRecipesByCalories(min, max);
     }
 
@@ -45,7 +51,8 @@ public class RecipeController {
     }
 
     @GetMapping("/getRandomRecipes")
-    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount, @RequestHeader Map<String, String> headers, HttpServletRequest request) {
+    public ResponseEntity<RecipeList> getRandomRecipes(@RequestParam int recipeCount, @RequestHeader Map<String, String>
+            headers, HttpServletRequest request) {
 //        System.out.println(headers);
 //        Enumeration<String> headerNames = request.getHeaderNames();
 //        while (headerNames.hasMoreElements()) {

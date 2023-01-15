@@ -8,17 +8,18 @@ import pl.pjatk.EatGood.exceptionshandlers.NotFoundUserException;
 import pl.pjatk.EatGood.repository.favourite.RecipeRepository;
 import pl.pjatk.EatGood.repository.favourite.UserRepository;
 
-import java.security.Principal;
 import java.util.Set;
 
 @Service
 public class FavouriteService {
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
+    private final User currentUser;
 
-    public FavouriteService(UserRepository userRepository, RecipeRepository recipeRepository) {
+    public FavouriteService(UserRepository userRepository, RecipeRepository recipeRepository, User currentUser) {
         this.userRepository = userRepository;
         this.recipeRepository = recipeRepository;
+        this.currentUser = currentUser;
     }
 
     public FavouriteRecipe saveFavouriteRecipe (FavouriteRecipe favouriteRecipeToSave) {
@@ -34,15 +35,15 @@ public class FavouriteService {
                 .orElseThrow(NotFoundFavouriteRecipeException::new);
     }
 
-    public User saveUser(Principal principal) {
+    public User saveUser() {
         User userToSave = new User();
-        userToSave.setUsername(principal.getName());
-        userToSave.setId(getUserIdFromPrincipal(principal));
+        userToSave.setUsername(currentUser.getUsername());
+        userToSave.setId(getUserIdFromUsername());
         return userRepository.save(userToSave);
     }
 
-    public Integer getUserIdFromPrincipal(Principal principal) {
-        return Integer.parseInt(principal.getName().substring(1));
+    public Integer getUserIdFromUsername() {
+        return Integer.parseInt(currentUser.getUsername().substring(1));
     }
 
     public void deleteUser(Integer id) {
@@ -54,24 +55,24 @@ public class FavouriteService {
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public User addRecipeToUser(Integer recipeId, Principal principal) {
+    public User addRecipeToUser(Integer recipeId) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-        User user = findUserById(getUserIdFromPrincipal(principal));
+        User user = findUserById(getUserIdFromUsername());
         user.getFavouriteRecipeSet().add(favouriteRecipe);
         userRepository.save(user);
         return user;
     }
 
-    public User removeRecipeFromUser(Integer recipeId, Principal principal) {
+    public User removeRecipeFromUser(Integer recipeId) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-        User user = findUserById(getUserIdFromPrincipal(principal));
+        User user = findUserById(getUserIdFromUsername());
         user.getFavouriteRecipeSet().remove(favouriteRecipe);
         userRepository.save(user);
         return user;
     }
 
-    public Set<FavouriteRecipe> getUserFavouriteRecipes(Principal principal) {
-        return findUserById(getUserIdFromPrincipal(principal)).getFavouriteRecipeSet();
+    public Set<FavouriteRecipe> getUserFavouriteRecipes() {
+        return findUserById(getUserIdFromUsername()).getFavouriteRecipeSet();
     }
 
 }
