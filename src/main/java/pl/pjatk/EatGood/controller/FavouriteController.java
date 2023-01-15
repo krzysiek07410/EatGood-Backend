@@ -42,7 +42,7 @@ public class FavouriteController {
 
     @GetMapping("/user/save")
     public ResponseEntity<User> saveUser(Principal principal) {
-        return ResponseEntity.ok(favouriteService.saveUser(principal));
+        return ResponseEntity.ok(favouriteService.saveUser());
     }
 
     @GetMapping("/user/delete")
@@ -58,16 +58,16 @@ public class FavouriteController {
 
     @GetMapping("/user/addrecipe")
     public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId, Principal principal) {
-        return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId, principal));
+        return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId));
     }
 
     @GetMapping("/user/removerecipe")
     public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId, Principal principal) {
-        return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId, principal));
+        return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId));
     }
 
     @GetMapping("/user/getrecipes")
     public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes(Principal principal) {
-        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes(principal));
+        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes());
     }
 }

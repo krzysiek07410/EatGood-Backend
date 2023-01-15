@@ -1,7 +1,6 @@
 package pl.pjatk.EatGood.domain;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -9,6 +8,8 @@ public class User {
     @Id
     private Integer id;
     private String username;
+    @Transient
+    private String password;
     @ManyToMany
     @JoinTable(
             name = "u_f",
@@ -43,6 +44,14 @@ public class User {
 
     public Set<FavouriteRecipe> getFavouriteRecipeSet() {
         return favouriteRecipeSet;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setFavouriteRecipeSet(Set<FavouriteRecipe> favouriteRecipeList) {
