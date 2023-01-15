@@ -165,7 +165,7 @@ public class RecipeService {
 //        return restTemplate.exchange(apiUrl + "/recipes/random?number=" + recipeCount, HttpMethod.GET, requestEntity, RecipeList.class);
 //    }
 
-    public RecipeList getRandomRecipes() {
+    public RecipeList getRandomRecipe() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(apiKeyName, apiKeyValue);
         headers.set(hostName, hostValue);

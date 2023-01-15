@@ -93,7 +93,7 @@ public class RecipeController {
 
     @GetMapping("/random")
     public ResponseEntity<RecipeList> getRandomRecipes() {
-        return ResponseEntity.ok(recipeService.getRandomRecipes());
+        return ResponseEntity.ok(recipeService.getRandomRecipe());
     }
 
     @GetMapping("/headers")
