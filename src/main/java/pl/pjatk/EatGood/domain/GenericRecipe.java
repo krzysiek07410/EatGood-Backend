@@ -2,6 +2,7 @@ package pl.pjatk.EatGood.domain;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 @MappedSuperclass
 public class GenericRecipe {
@@ -9,6 +10,7 @@ public class GenericRecipe {
     private Integer id;
     private String title;
     private String image;
+    @Transient
     private String imageType;
 
     public GenericRecipe(Integer id, String title, String image, String imageType) {

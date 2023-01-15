@@ -34,10 +34,7 @@ public class FavouriteService {
     }
 
     public User saveUser(String username) {
-        User userToSave = new User();
-        userToSave.setUsername(username);
-        userToSave.setId(getUserIdFromUsername(username));
-        return userRepository.save(userToSave);
+        return userRepository.save(new User(getUserIdFromUsername(username), username));
     }
 
     public Integer getUserIdFromUsername(String username) {
@@ -52,6 +49,12 @@ public class FavouriteService {
         return userRepository.findById(id)
                 .orElseThrow(NotFoundUserException::new);
     }
+
+    public User findUserByIdOrSaveUser(String username) {
+        return userRepository.findById(getUserIdFromUsername(username))
+                .orElse(saveUser(username));
+    }
+
 
     public User addRecipeToUser(Integer recipeId, String username) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);

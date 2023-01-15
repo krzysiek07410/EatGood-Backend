@@ -56,6 +56,11 @@ public class FavouriteController {
         return ResponseEntity.ok(favouriteService.findUserById(id));
     }
 
+    @GetMapping("/user/findorsave")
+    public ResponseEntity<User> getUserByIdOrSaveUser(@RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.findUserByIdOrSaveUser(username));
+    }
+
     @GetMapping("/user/addrecipe")
     public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId,
                                                 @RequestHeader(name = "Username") String username) {
