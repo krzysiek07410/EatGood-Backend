@@ -41,8 +41,8 @@ public class FavouriteController {
     }
 
     @GetMapping("/user/save")
-    public ResponseEntity<User> saveUser() {
-        return ResponseEntity.ok(favouriteService.saveUser());
+    public ResponseEntity<User> saveUser(@RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.saveUser(username));
     }
 
     @GetMapping("/user/delete")
@@ -57,17 +57,20 @@ public class FavouriteController {
     }
 
     @GetMapping("/user/addrecipe")
-    public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId) {
-        return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId));
+    public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId,
+                                                @RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId, username));
     }
 
     @GetMapping("/user/removerecipe")
-    public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId) {
-        return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId));
+    public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId,
+                                                     @RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId, username));
     }
 
     @GetMapping("/user/getrecipes")
-    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes() {
-        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes());
+    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes(@RequestHeader(name = "Username")
+                                                                            String username) {
+        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes(username));
     }
 }

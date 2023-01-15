@@ -14,12 +14,10 @@ import java.util.Set;
 public class FavouriteService {
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
-    private final User currentUser;
 
-    public FavouriteService(UserRepository userRepository, RecipeRepository recipeRepository, User currentUser) {
+    public FavouriteService(UserRepository userRepository, RecipeRepository recipeRepository) {
         this.userRepository = userRepository;
         this.recipeRepository = recipeRepository;
-        this.currentUser = currentUser;
     }
 
     public FavouriteRecipe saveFavouriteRecipe (FavouriteRecipe favouriteRecipeToSave) {
@@ -35,15 +33,15 @@ public class FavouriteService {
                 .orElseThrow(NotFoundFavouriteRecipeException::new);
     }
 
-    public User saveUser() {
+    public User saveUser(String username) {
         User userToSave = new User();
-        userToSave.setUsername(currentUser.getUsername());
-        userToSave.setId(getUserIdFromUsername());
+        userToSave.setUsername(username);
+        userToSave.setId(getUserIdFromUsername(username));
         return userRepository.save(userToSave);
     }
 
-    public Integer getUserIdFromUsername() {
-        return Integer.parseInt(currentUser.getUsername().substring(1));
+    public Integer getUserIdFromUsername(String username) {
+        return Integer.parseInt(username.substring(1));
     }
 
     public void deleteUser(Integer id) {
@@ -55,24 +53,24 @@ public class FavouriteService {
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public User addRecipeToUser(Integer recipeId) {
+    public User addRecipeToUser(Integer recipeId, String username) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-        User user = findUserById(getUserIdFromUsername());
+        User user = findUserById(getUserIdFromUsername(username));
         user.getFavouriteRecipeSet().add(favouriteRecipe);
         userRepository.save(user);
         return user;
     }
 
-    public User removeRecipeFromUser(Integer recipeId) {
+    public User removeRecipeFromUser(Integer recipeId, String username) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-        User user = findUserById(getUserIdFromUsername());
+        User user = findUserById(getUserIdFromUsername(username));
         user.getFavouriteRecipeSet().remove(favouriteRecipe);
         userRepository.save(user);
         return user;
     }
 
-    public Set<FavouriteRecipe> getUserFavouriteRecipes() {
-        return findUserById(getUserIdFromUsername()).getFavouriteRecipeSet();
+    public Set<FavouriteRecipe> getUserFavouriteRecipes(String username) {
+        return findUserById(getUserIdFromUsername(username)).getFavouriteRecipeSet();
     }
 
 }

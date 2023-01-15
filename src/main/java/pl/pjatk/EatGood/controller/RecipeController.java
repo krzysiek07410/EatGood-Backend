@@ -1,15 +1,15 @@
 package pl.pjatk.EatGood.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import pl.pjatk.EatGood.domain.GenericRecipeList;
-import pl.pjatk.EatGood.domain.Recipe;
 import pl.pjatk.EatGood.domain.RecipeList;
 import pl.pjatk.EatGood.service.RecipeService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -91,8 +91,42 @@ public class RecipeController {
 //        return recipeService.getRandomRecipes(recipeCount);
 //    }
 
+    @GetMapping("/queryanddiet")
+    public ResponseEntity<GenericRecipeList> getRecipesByQueryAndDiet(@RequestParam String query,
+                                                                      @RequestParam String diet) {
+        return ResponseEntity.ok(recipeService.getRecipesByQueryAndDiet(query, diet));
+    }
+
+    @GetMapping("/queryandcalories")
+    public ResponseEntity<GenericRecipeList> getRecipesByQueryAndCalories(@RequestParam String query,
+                                                                          @RequestParam(required = false,
+                                                                                  defaultValue = "0") int min,
+                                                                          @RequestParam(required = false,
+                                                                                  defaultValue = "0") int max) {
+        return ResponseEntity.ok(recipeService.getRecipesByQueryAndCalories(query, min, max));
+    }
+
+    @GetMapping("/dietandcalories")
+    public ResponseEntity<GenericRecipeList> getRecipesByDietAndCalories(@RequestParam String diet,
+                                                                         @RequestParam(required = false,
+                                                                                 defaultValue = "0") int min,
+                                                                         @RequestParam(required = false,
+                                                                                 defaultValue = "0") int max) {
+        return ResponseEntity.ok(recipeService.getRecipesByDietAndCalories(diet, min, max));
+    }
+
+    @GetMapping("/queryanddietandcalories")
+    public ResponseEntity<GenericRecipeList> getRecipesByDietAndCalories(@RequestParam String query,
+                                                                         @RequestParam String diet,
+                                                                         @RequestParam(required = false,
+                                                                                 defaultValue = "0") int min,
+                                                                         @RequestParam(required = false,
+                                                                                 defaultValue = "0") int max) {
+        return ResponseEntity.ok(recipeService.getRecipesByQueryAndDietAndCalories(query, diet, min, max));
+    }
+
     @GetMapping("/random")
-    public ResponseEntity<RecipeList> getRandomRecipes() {
+    public ResponseEntity<RecipeList> getRandomRecipe() {
         return ResponseEntity.ok(recipeService.getRandomRecipe());
     }
 

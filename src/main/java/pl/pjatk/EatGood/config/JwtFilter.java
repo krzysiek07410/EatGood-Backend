@@ -3,6 +3,9 @@ package pl.pjatk.EatGood.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import org.hibernate.annotations.Filter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import pl.pjatk.EatGood.domain.User;
 
 import javax.servlet.FilterChain;
@@ -15,10 +18,11 @@ import java.util.Objects;
 
 public class JwtFilter implements javax.servlet.Filter {
 
-    private final User currentUser;
+    @Value("${signing.key}")
+    private String signingKey;
 
-    public JwtFilter(User currentUser) {
-        this.currentUser = currentUser;
+    public JwtFilter(String signingKey) {
+        this.signingKey = signingKey;
     }
 
     @Override
@@ -26,20 +30,17 @@ public class JwtFilter implements javax.servlet.Filter {
             throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String header = httpServletRequest.getHeader("authorization");
+        String headerToken = httpServletRequest.getHeader("Authorization");
+        String headerUsername = httpServletRequest.getHeader("Username");
 
-//        System.out.println(httpServletRequest.getMethod());
-//        System.out.println(!Objects.equals(httpServletRequest.getMethod(), "OPTIONS"));
-//
         if (!Objects.equals(httpServletRequest.getMethod(), "OPTIONS")) {
-            if (header == null || !header.startsWith("Bearer ")) {
-//                System.out.println(header);
+            if (headerToken == null || !headerToken.startsWith("Bearer ")) {
                 throw new ServletException("Missing or invalid Authorization header");
             } else {
-//                System.out.println(header);
                 try {
-                    String token = header.substring(7);
-                    Claims claims = Jwts.parser().setSigningKey(currentUser.getPassword()).parseClaimsJws(token).getBody();
+                    String token = headerToken.substring(7);
+                    Claims claims = Jwts.parser().setSigningKey((headerUsername + signingKey).getBytes())
+                            .parseClaimsJws(token).getBody();
                     servletRequest.setAttribute("claims", claims);
                 } catch (final SignatureException e) {
                     throw new ServletException("Invalid token");

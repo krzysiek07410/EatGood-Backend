@@ -1,13 +1,14 @@
 package pl.pjatk.EatGood.controller;
 
-import pl.pjatk.EatGood.domain.User;
-import pl.pjatk.EatGood.service.LdapService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.pjatk.EatGood.domain.User;
+import pl.pjatk.EatGood.service.LdapService;
 
 import java.util.Date;
 
@@ -15,28 +16,25 @@ import java.util.Date;
 @RequestMapping("/")
 public class LdapController {
 
+    @Value("${signing.key}")
+    private String signingKey;
 
     private final LdapService ldapService;
-    private final User currentUser;
 
-    public LdapController(LdapService ldapService, User currentUser) {
+    public LdapController(LdapService ldapService) {
         this.ldapService = ldapService;
-        this.currentUser = currentUser;
     }
 
     @PostMapping("/log")
     public String login(@RequestBody User user) {
         ldapService.authenticate(user.getUsername(), user.getPassword());
         long currentTimeMillis = System.currentTimeMillis();
-        currentUser.setUsername(user.getUsername());
-        currentUser.setPassword(user.getPassword());
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("roles","user")
                 .setIssuedAt(new Date(currentTimeMillis))
-                .setExpiration(new Date(currentTimeMillis + 900000))
-                .signWith(SignatureAlgorithm.HS512, user.getPassword())
+                .setExpiration(new Date(currentTimeMillis + 1800000))
+                .signWith(SignatureAlgorithm.HS512, (user.getUsername() + signingKey).getBytes())
                 .compact();
     }
-
 }
