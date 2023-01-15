@@ -8,6 +8,7 @@ import pl.pjatk.EatGood.domain.RecipeList;
 import pl.pjatk.EatGood.service.RecipeService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -93,5 +94,10 @@ public class RecipeController {
     @GetMapping("/random")
     public ResponseEntity<RecipeList> getRandomRecipes() {
         return ResponseEntity.ok(recipeService.getRandomRecipes());
+    }
+
+    @GetMapping("/headers")
+    public ResponseEntity<LinkedHashMap<String, Integer>> getHeaders() {
+        return ResponseEntity.ok(recipeService.getHeaders());
     }
 }
