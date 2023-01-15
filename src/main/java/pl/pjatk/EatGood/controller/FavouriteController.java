@@ -10,7 +10,7 @@ import java.security.Principal;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/favourite")
+@RequestMapping("/api/favourite")
 public class FavouriteController {
 
     private final FavouriteService favouriteService;
@@ -41,7 +41,7 @@ public class FavouriteController {
     }
 
     @GetMapping("/user/save")
-    public ResponseEntity<User> saveUser(Principal principal) {
+    public ResponseEntity<User> saveUser() {
         return ResponseEntity.ok(favouriteService.saveUser());
     }
 
@@ -57,17 +57,17 @@ public class FavouriteController {
     }
 
     @GetMapping("/user/addrecipe")
-    public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId, Principal principal) {
+    public ResponseEntity<User> addRecipeToUser(@RequestParam Integer recipeId) {
         return ResponseEntity.ok(favouriteService.addRecipeToUser(recipeId));
     }
 
     @GetMapping("/user/removerecipe")
-    public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId, Principal principal) {
+    public ResponseEntity<User> removeRecipeFromUser(@RequestParam Integer recipeId) {
         return ResponseEntity.ok(favouriteService.removeRecipeFromUser(recipeId));
     }
 
     @GetMapping("/user/getrecipes")
-    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes(Principal principal) {
+    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipes() {
         return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes());
     }
 }
