@@ -57,8 +57,8 @@ public class FavouriteController {
     }
 
     @GetMapping("/user/findorsave")
-    public ResponseEntity<User> getUserByIdOrSaveUser(@RequestHeader(name = "Username") String username) {
-        return ResponseEntity.ok(favouriteService.findUserByIdOrSaveUser(username));
+    public ResponseEntity<User> getUserByUsernameOrSaveUser(@RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.findUserByUsernameOrSaveUser(username));
     }
 
     @GetMapping("/user/addrecipe")

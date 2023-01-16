@@ -38,7 +38,12 @@ public class FavouriteService {
     }
 
     public Integer getUserIdFromUsername(String username) {
-        return Integer.parseInt(username.substring(1));
+//        return Integer.parseInt(username.substring(1));
+        try {
+            return Integer.parseInt(username.substring(1));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     public void deleteUser(Integer id) {
@@ -50,15 +55,25 @@ public class FavouriteService {
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public User findUserByIdOrSaveUser(String username) {
-        return userRepository.findById(getUserIdFromUsername(username))
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(NotFoundUserException::new);
+    }
+
+//    public User findUserByIdOrSaveUser(String username) {
+//        return userRepository.findById(getUserIdFromUsername(username))
+//                .orElse(saveUser(username));
+//    }
+
+    public User findUserByUsernameOrSaveUser(String username) {
+        return userRepository.findUserByUsername(username)
                 .orElse(saveUser(username));
     }
 
-
     public User addRecipeToUser(Integer recipeId, String username) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-        User user = findUserById(getUserIdFromUsername(username));
+//        User user = findUserById(getUserIdFromUsername(username));
+        User user = findUserByUsername(username);
         user.getFavouriteRecipeSet().add(favouriteRecipe);
         userRepository.save(user);
         return user;
