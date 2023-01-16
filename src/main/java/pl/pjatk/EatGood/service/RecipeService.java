@@ -175,9 +175,9 @@ public class RecipeService {
         if (min == 0) {
             url = apiUrl + "/recipes/complexSearch?query=" + query + "&maxCalories=" + max;
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&inCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min;
         } else {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&inCalories=" + min + "&maxCalories="  + max;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&maxCalories="  + max;
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -193,9 +193,9 @@ public class RecipeService {
         if (min == 0) {
             url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&maxCalories=" + max;
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&inCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min;
         } else {
-            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&inCalories=" + min + "&maxCalories="  + max;
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min + "&maxCalories="  + max;
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -211,9 +211,9 @@ public class RecipeService {
         if (min == 0) {
             url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&maxCalories=" + max;
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&inCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + min;
         } else {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&inCalories=" + min +
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + min +
                     "&maxCalories="  + max;
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
