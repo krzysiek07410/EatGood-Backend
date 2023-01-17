@@ -2,6 +2,10 @@ package pl.pjatk.EatGood.controller;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +17,7 @@ import pl.pjatk.EatGood.service.LdapService;
 
 import java.util.Date;
 
+@Api(value = "Authentication controller", description = "Controller for authentication")
 @RestController
 @RequestMapping("/")
 public class LdapController {
@@ -27,6 +32,15 @@ public class LdapController {
     }
 
     @PostMapping("/log")
+    @ApiOperation(
+            value = "Authenticate user",
+            notes = "Authenticate user with given username and password",
+            response = Jwts.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 400, message = "Bad request", response = String.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = String.class)
+    })
     public String login(@RequestBody User user) throws LdapAuthenticationException {
         try {
             ldapService.authenticate(user.getUsername(), user.getPassword());
