@@ -15,14 +15,17 @@ import java.util.Objects;
 public class FilterErrorController implements ErrorController {
     @RequestMapping("/error")
     public void handleError(HttpServletRequest request) throws Throwable {
-        String exceptionString = request.getAttribute("javax.servlet.error.exception").toString();
-        if (exceptionString.equals("pl.pjatk.EatGood.exceptionshandlers.TokenHeaderException")) {
-            throw new TokenHeaderException();
-        } else if (exceptionString.contains("io.jsonwebtoken.ExpiredJwtException")) {
-            throw new TokenExpiredException();
-        } else if (exceptionString.equals("pl.pjatk.EatGood.exceptionshandlers.TokenException") ||
-                exceptionString.contains("JwtException")) {
-            throw new TokenException();
+        String exceptionString = new String();
+        if (request.getAttribute("javax.servlet.error.exception") != null) {
+            exceptionString = request.getAttribute("javax.servlet.error.exception").toString();
+            if (exceptionString.equals("pl.pjatk.EatGood.exceptionshandlers.TokenHeaderException")) {
+                throw new TokenHeaderException();
+            } else if (exceptionString.contains("io.jsonwebtoken.ExpiredJwtException")) {
+                throw new TokenExpiredException();
+            } else if (exceptionString.equals("pl.pjatk.EatGood.exceptionshandlers.TokenException") ||
+                    exceptionString.contains("JwtException")) {
+                throw new TokenException();
+            }
         }
     }
 }
