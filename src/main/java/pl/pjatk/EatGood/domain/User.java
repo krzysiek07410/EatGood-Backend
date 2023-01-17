@@ -1,15 +1,23 @@
 package pl.pjatk.EatGood.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Set;
 
+@ApiModel(value = "User", description = "A user")
 @Entity
 public class User {
+    @ApiModelProperty(value = "Unique identifier of the user", required = true)
     @Id
     private Integer id;
+    @ApiModelProperty(value = "Username of the user", required = true)
     private String username;
+    @ApiModelProperty(value = "Password of the user", required = true)
     @Transient
     private String password;
+    @ApiModelProperty(value = "Set of favourite recipes of the user")
     @ManyToMany
     @JoinTable(
             name = "u_f",
