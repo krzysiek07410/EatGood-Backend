@@ -1,16 +1,29 @@
 package pl.pjatk.EatGood.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
+@ApiModel(value = "Recipe", description = "Details of a recipe")
 public class Recipe {
+    @ApiModelProperty(value = "Unique identifier of the recipe.", required = true)
     private Integer id;
+    @ApiModelProperty(value = "Title of the recipe.", required = true)
     private String title;
+    @ApiModelProperty(value = "Summary of instructions", required = true)
     private String summary;
+    @ApiModelProperty(value = "Instructions of the recipe.", required = true)
     private String instructions;
+    @ApiModelProperty(value = "Image of the recipe.", required = true)
     private String image;
+    @ApiModelProperty(value = "Time to make recipe in minutes.", required = true)
     private int readyInMinutes;
+    @ApiModelProperty(value = "Servings of the recipe.", required = true)
     private int servings;
+    @ApiModelProperty(value = "List of cuisines of the recipe.", required = true)
     private List<String> cuisines;
+    @ApiModelProperty(value = "List of diets of the recipe.", required = true)
     private List<String> diets;
 
     public Recipe() {
