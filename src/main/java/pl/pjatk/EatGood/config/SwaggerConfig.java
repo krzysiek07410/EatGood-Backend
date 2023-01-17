@@ -29,8 +29,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("REST API")
-                .description("Servicesx")
+                .title("EatGood API")
+                .description("EatGood API reference for developers")
+                .termsOfServiceUrl("https://gdansk.pja.edu.pl/")
+                .license("EatGood License")
                 .build();
     }
 }
