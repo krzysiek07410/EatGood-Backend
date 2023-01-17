@@ -1,6 +1,11 @@
 package pl.pjatk.EatGood.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "GenericRecipeList", description = "A wrapper class of Generic Recipes")
 public class GenericRecipeList {
+    @ApiModelProperty(value = "Array of GenericRecipes", required = true)
     private GenericRecipe[] results;
 
     public GenericRecipeList() {
