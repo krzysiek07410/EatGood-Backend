@@ -1,5 +1,7 @@
 package pl.pjatk.EatGood.exceptionshandlers;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,4 +41,25 @@ public class ExceptionsHandler {
     public ResponseEntity<String> getUserById() {
         return ResponseEntity.status(404).body("NOT FOUND");
     }
+
+    @ExceptionHandler(LdapAuthenticationException.class)
+    public ResponseEntity<String> login() {
+        return ResponseEntity.status(401).body("LDAP INVALID CREDENTIALS");
+    }
+
+    @ExceptionHandler(TokenHeaderException.class)
+    public ResponseEntity<String> doFilterTokenHeader() {
+        return ResponseEntity.status(401).body("MISSING OR INVALID TOKEN HEADER");
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<String> doFilterToken() {
+        return ResponseEntity.status(401).body("INVALID TOKEN");
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<String> doFilterTokenExpired() {
+        return ResponseEntity.status(403).body("EXPIRED TOKEN");
+    }
+
 }

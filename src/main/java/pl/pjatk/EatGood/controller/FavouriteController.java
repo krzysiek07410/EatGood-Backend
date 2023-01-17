@@ -6,7 +6,6 @@ import pl.pjatk.EatGood.domain.FavouriteRecipe;
 import pl.pjatk.EatGood.domain.User;
 import pl.pjatk.EatGood.service.FavouriteService;
 
-import java.security.Principal;
 import java.util.Set;
 
 @RestController
@@ -38,6 +37,12 @@ public class FavouriteController {
     @GetMapping("/recipe/find")
     public ResponseEntity<FavouriteRecipe> getFavouriteRecipeById(@RequestParam Integer id) {
         return ResponseEntity.ok(favouriteService.findFavouriteRecipeById(id));
+    }
+
+    @PostMapping("/recipe/findorsave")
+    public ResponseEntity<FavouriteRecipe> getFavouriteRecipeByIdOrSaveFavouriteRecipe (@RequestBody FavouriteRecipe
+                                                                                                    favouriteRecipe) {
+        return ResponseEntity.ok(favouriteService.findFavouriteRecipeByIdOrSaveFavouriteRecipe(favouriteRecipe));
     }
 
     @GetMapping("/user/save")
@@ -78,4 +83,18 @@ public class FavouriteController {
                                                                             String username) {
         return ResponseEntity.ok(favouriteService.getUserFavouriteRecipes(username));
     }
+
+    @GetMapping("/user/getrecipe")
+    public ResponseEntity<Set<FavouriteRecipe>> getUserFavouriteRecipe(@RequestParam Integer recipeId,
+                                                                       @RequestHeader(name = "Username")
+                                                                        String username) {
+        return ResponseEntity.ok(favouriteService.getUserFavouriteRecipeById(recipeId, username));
+    }
+
+    @GetMapping("/user/isfavouriterecipe")
+    public ResponseEntity<Boolean> isFavouriteRecipeUserFavourite(@RequestParam Integer recipeId,
+                                                                  @RequestHeader(name = "Username") String username) {
+        return ResponseEntity.ok(favouriteService.isFavouriteRecipeUserFavourite(recipeId, username));
+    }
+
 }

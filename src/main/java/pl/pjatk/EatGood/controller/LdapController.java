@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.pjatk.EatGood.domain.User;
+import pl.pjatk.EatGood.exceptionshandlers.LdapAuthenticationException;
 import pl.pjatk.EatGood.service.LdapService;
 
 import java.util.Date;
@@ -26,15 +27,19 @@ public class LdapController {
     }
 
     @PostMapping("/log")
-    public String login(@RequestBody User user) {
-        ldapService.authenticate(user.getUsername(), user.getPassword());
-        long currentTimeMillis = System.currentTimeMillis();
-        return Jwts.builder()
-                .setSubject(user.getUsername())
-                .claim("roles","user")
-                .setIssuedAt(new Date(currentTimeMillis))
-                .setExpiration(new Date(currentTimeMillis + 1800000))
-                .signWith(SignatureAlgorithm.HS512, (user.getUsername() + signingKey).getBytes())
-                .compact();
+    public String login(@RequestBody User user) throws LdapAuthenticationException {
+        try {
+            ldapService.authenticate(user.getUsername(), user.getPassword());
+            long currentTimeMillis = System.currentTimeMillis();
+            return Jwts.builder()
+                    .setSubject(user.getUsername())
+                    .claim("roles", "user")
+                    .setIssuedAt(new Date(currentTimeMillis))
+                    .setExpiration(new Date(currentTimeMillis + 1800000))
+                    .signWith(SignatureAlgorithm.HS512, (user.getUsername() + signingKey).getBytes())
+                    .compact();
+        } catch(Exception e) {
+            throw new LdapAuthenticationException();
+        }
     }
 }
