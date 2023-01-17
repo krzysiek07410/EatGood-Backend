@@ -41,6 +41,19 @@ public class FavouriteControllerIT {
     @MockBean
     private UserRepository userRepository;
 
+    //test DONE
+    //saveFavouriteRecipe TODO
+    //deleteFavouriteRecipe DONE
+    //findFavouriteRecipeById TODO
+    //saveUser TODO
+    //getUserIdFromUsername TODO
+    //deleteUser DONE
+    //findUserById TODO
+    //findUserByIdOrSaveUser TODO
+    //addRecipeToUser TODO
+    //removeRecipeFromUser DONE
+    //getUserFavouriteRecipes TODO
+
     @Test
     public void shouldReturnTestString() throws Exception {
         mockMvc.perform(post("/api/favourite/test"))
