@@ -33,6 +33,11 @@ public class FavouriteService {
                 .orElseThrow(NotFoundFavouriteRecipeException::new);
     }
 
+    public FavouriteRecipe findFavouriteRecipeByIdOrSaveFavouriteRecipe(FavouriteRecipe favouriteRecipe) {
+        return recipeRepository.findById(favouriteRecipe.getId())
+                .orElse(saveFavouriteRecipe(favouriteRecipe));
+    }
+
     public User saveUser(String username) {
         return userRepository.save(new User(getUserIdFromUsername(username), username));
     }
@@ -88,7 +93,16 @@ public class FavouriteService {
     }
 
     public Set<FavouriteRecipe> getUserFavouriteRecipes(String username) {
-        return findUserById(getUserIdFromUsername(username)).getFavouriteRecipeSet();
+//        return findUserById(getUserIdFromUsername(username)).getFavouriteRecipeSet();
+        return findUserByUsername(username).getFavouriteRecipeSet();
     }
 
+    public Set<FavouriteRecipe> getUserFavouriteRecipeById(Integer favouriteRecipeId, String username) {
+        return recipeRepository.findFavouriteRecipeByIdAndUserId(favouriteRecipeId, getUserIdFromUsername(username));
+    }
+
+    public Boolean isFavouriteRecipeUserFavourite(Integer favouriteRecipeId, String username) {
+        Set<FavouriteRecipe> favouriteRecipeSet = getUserFavouriteRecipeById(favouriteRecipeId, username);
+        return favouriteRecipeSet.size() == 1;
+    }
 }

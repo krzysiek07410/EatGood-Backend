@@ -7,6 +7,8 @@ import org.hibernate.annotations.Filter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.pjatk.EatGood.domain.User;
+import pl.pjatk.EatGood.exceptionshandlers.TokenException;
+import pl.pjatk.EatGood.exceptionshandlers.TokenHeaderException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,7 +37,7 @@ public class JwtFilter implements javax.servlet.Filter {
 
         if (!Objects.equals(httpServletRequest.getMethod(), "OPTIONS")) {
             if (headerToken == null || !headerToken.startsWith("Bearer ")) {
-                throw new ServletException("Missing or invalid Authorization header");
+                throw new TokenHeaderException();
             } else {
                 try {
                     String token = headerToken.substring(7);
@@ -43,7 +45,7 @@ public class JwtFilter implements javax.servlet.Filter {
                             .parseClaimsJws(token).getBody();
                     servletRequest.setAttribute("claims", claims);
                 } catch (final SignatureException e) {
-                    throw new ServletException("Invalid token");
+                    throw new TokenException();
                 }
             }
         }
