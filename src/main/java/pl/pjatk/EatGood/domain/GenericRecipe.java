@@ -1,15 +1,23 @@
 package pl.pjatk.EatGood.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+@ApiModel(value = "GenericRecipe", description = "A generic model of recipe")
 @MappedSuperclass
 public class GenericRecipe {
+    @ApiModelProperty(value = "Unique identifier of the recipe", required = true)
     @Id
     private Integer id;
+    @ApiModelProperty(value = "Title of the recipe", required = true)
     private String title;
+    @ApiModelProperty(value = "Image of the recipe", required = true)
     private String image;
+    @ApiModelProperty(value = "Image type of the recipe", required = true)
     @Transient
     private String imageType;
 
