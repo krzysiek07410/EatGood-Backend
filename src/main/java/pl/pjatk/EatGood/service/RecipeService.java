@@ -66,7 +66,7 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?query="
-                + query, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+                + query + "&instructionsRequired=true", HttpMethod.GET, requestEntity, GenericRecipeList.class);
         return response.getBody();
     }
 
@@ -83,7 +83,7 @@ public class RecipeService {
         headers.set(apiKeyName, apiKeyValue);
         headers.set(hostName, hostValue);
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
-        ResponseEntity<Recipe[]> response = restTemplate.exchange(apiUrl + "/recipes/informationBulk?ids=" + ids,
+        ResponseEntity<Recipe[]> response = restTemplate.exchange(apiUrl + "/recipes/informationBulk?ids=" + ids + "&instructionsRequired=true",
                 HttpMethod.GET, requestEntity, Recipe[].class);
         return new RecipeList(response.getBody());
     }
@@ -109,11 +109,11 @@ public class RecipeService {
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         String url = new String();
         if (min == 0) {
-            url = apiUrl + "/recipes/complexSearch?maxCalories=" + max;
+            url = apiUrl + "/recipes/complexSearch?maxCalories=" + max + "&instructionsRequired=true";
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?minCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?minCalories=" + min + "&instructionsRequired=true";
         } else {
-            url = apiUrl + "/recipes/complexSearch?minCalories=" + min + "&maxCalories="  + max;
+            url = apiUrl + "/recipes/complexSearch?minCalories=" + min + "&maxCalories="  + max + "&instructionsRequired=true";
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -134,7 +134,7 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?cuisine="
-                + cuisine, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+                + cuisine + "&instructionsRequired=true", HttpMethod.GET, requestEntity, GenericRecipeList.class);
         return response.getBody();
     }
 
@@ -152,7 +152,7 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?diet="
-                + diet, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+                + diet + "&instructionsRequired=true", HttpMethod.GET, requestEntity, GenericRecipeList.class);
         return response.getBody();
     }
 
@@ -162,7 +162,7 @@ public class RecipeService {
         headers.set(hostName, hostValue);
         HttpEntity<GenericRecipe> requestEntity = new HttpEntity<GenericRecipe>(headers);
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(apiUrl + "/recipes/complexSearch?query="
-                + query + "&diet=" + diet, HttpMethod.GET, requestEntity, GenericRecipeList.class);
+                + query + "&diet=" + diet + "&instructionsRequired=true", HttpMethod.GET, requestEntity, GenericRecipeList.class);
         return response.getBody();
     }
 
@@ -173,11 +173,11 @@ public class RecipeService {
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         String url = new String();
         if (min == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&maxCalories=" + max;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&maxCalories=" + max + "&instructionsRequired=true";
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&instructionsRequired=true";
         } else {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&maxCalories="  + max;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&maxCalories="  + max + "&instructionsRequired=true";
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -191,11 +191,11 @@ public class RecipeService {
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         String url = new String();
         if (min == 0) {
-            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&maxCalories=" + max;
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&maxCalories=" + max + "&instructionsRequired=true";
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min + "&instructionsRequired=true";
         } else {
-            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min + "&maxCalories="  + max;
+            url = apiUrl + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + min + "&maxCalories="  + max + "&instructionsRequired=true";
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -209,12 +209,12 @@ public class RecipeService {
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
         String url = new String();
         if (min == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&maxCalories=" + max;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&maxCalories=" + max + "&instructionsRequired=true";
         } else if (max == 0) {
-            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + min;
+            url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + min + "&instructionsRequired=true";
         } else {
             url = apiUrl + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + min +
-                    "&maxCalories="  + max;
+                    "&maxCalories="  + max + "&instructionsRequired=true";
         }
         ResponseEntity<GenericRecipeList> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                 GenericRecipeList.class);
@@ -233,7 +233,7 @@ public class RecipeService {
         headers.set(apiKeyName, apiKeyValue);
         headers.set(hostName, hostValue);
         HttpEntity<Recipe> requestEntity = new HttpEntity<Recipe>(headers);
-        ResponseEntity<RecipeList> response = restTemplate.exchange(apiUrl + "/recipes/random?number=1",
+        ResponseEntity<RecipeList> response = restTemplate.exchange(apiUrl + "/recipes/random?number=1" + "&instructionsRequired=true",
                 HttpMethod.GET, requestEntity, RecipeList.class);
         return response.getBody();
     }
