@@ -32,7 +32,7 @@ public class Recipe {
     }
 
     public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes,
-                  int servings, List<String> cuisines, List<String> diets, IngredientsList ingredients) {
+                  int servings, List<String> cuisines, List<String> diets, IngredientsList extendedIngredients) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -42,7 +42,7 @@ public class Recipe {
         this.servings = servings;
         this.cuisines = cuisines;
         this.diets = diets;
-        this.extendedIngredients = ingredients;
+        this.extendedIngredients = extendedIngredients;
     }
 
     public Integer getId() {

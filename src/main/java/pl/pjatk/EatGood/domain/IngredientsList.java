@@ -6,20 +6,20 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "IngredientsList", description = "A wrapper class of Ingredients")
 public class IngredientsList {
     @ApiModelProperty(value = "Array of Ingredients", required = true)
-    private Ingredient[] ingredients;
+    private Ingredient[] extendedIngredients;
 
     public IngredientsList() {
     }
 
-    public IngredientsList(Ingredient[] ingredients) {
-        this.ingredients = ingredients;
+    public IngredientsList(Ingredient[] extendedIngredients) {
+        this.extendedIngredients = extendedIngredients;
     }
 
     public Ingredient[] getIngredients() {
-        return ingredients;
+        return extendedIngredients;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredients(Ingredient[] extendedIngredients) {
+        this.extendedIngredients = extendedIngredients;
     }
 }
