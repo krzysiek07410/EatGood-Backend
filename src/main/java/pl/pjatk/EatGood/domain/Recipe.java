@@ -26,13 +26,13 @@ public class Recipe {
     @ApiModelProperty(value = "List of diets of the recipe.", required = true)
     private List<String> diets;
     @ApiModelProperty(value = "List of ingredients of the recipe.", required = true)
-    private IngredientsList extendedIngredients;
+    private Ingredient[] extendedIngredients;
 
     public Recipe() {
     }
 
     public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes,
-                  int servings, List<String> cuisines, List<String> diets, IngredientsList extendedIngredients) {
+                  int servings, List<String> cuisines, List<String> diets, Ingredient[] extendedIngredients) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -117,11 +117,11 @@ public class Recipe {
         this.diets = diets;
     }
 
-    public IngredientsList getIngredients() {
+    public Ingredient[] getExtendedIngredients() {
         return extendedIngredients;
     }
 
-    public void setIngredients(IngredientsList ingredients) {
+    public void setExtendedIngredients(Ingredient[] extendedIngredients) {
         this.extendedIngredients = extendedIngredients;
     }
 
