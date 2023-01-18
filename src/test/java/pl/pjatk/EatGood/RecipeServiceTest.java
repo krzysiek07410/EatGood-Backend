@@ -49,7 +49,7 @@ class RecipeServiceTest {
         String query = "chicken";
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=chicken"),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=chicken&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByQuery(query);
@@ -62,7 +62,7 @@ class RecipeServiceTest {
         String ids = "123,456";
         Recipe[] expectedRecipes = new Recipe[]{};
         ResponseEntity<Recipe[]> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/informationBulk?ids=" + ids),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/informationBulk?ids=" + ids + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(Recipe[].class))).thenReturn(response);
 
         RecipeList actualRecipes = recipeService.getRecipesInformation(ids);
@@ -76,7 +76,7 @@ class RecipeServiceTest {
         long maxCalories = 1000;
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?minCalories=" + minCalories + "&maxCalories="  + maxCalories),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?minCalories=" + minCalories + "&maxCalories="  + maxCalories + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByCalories(minCalories, maxCalories);
@@ -89,7 +89,7 @@ class RecipeServiceTest {
         String cuisine = "chinese";
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?cuisine=" + cuisine),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?cuisine=" + cuisine + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByCuisine(cuisine);
@@ -102,7 +102,7 @@ class RecipeServiceTest {
         String diet = "vegetarian";
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?diet=" + diet),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?diet=" + diet + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByDiet(diet);
@@ -116,7 +116,7 @@ class RecipeServiceTest {
         String diet = "vegetarian";
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&diet=" + diet),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByQueryAndDiet(query, diet);
@@ -131,7 +131,7 @@ class RecipeServiceTest {
         long max = 1000;
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&maxCalories="  + max),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&minCalories=" + min + "&maxCalories="  + max + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByQueryAndCalories(query, min, max);
@@ -146,7 +146,7 @@ class RecipeServiceTest {
         long maxCalories = 1000;
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + minCalories + "&maxCalories="  + maxCalories),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?diet=" + diet + "&minCalories=" + minCalories + "&maxCalories="  + maxCalories + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByDietAndCalories(diet, minCalories, maxCalories);
@@ -162,7 +162,7 @@ class RecipeServiceTest {
         long maxCalories = 1000;
         GenericRecipeList expectedRecipes = new GenericRecipeList();
         ResponseEntity<GenericRecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + minCalories + "&maxCalories="  + maxCalories),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/complexSearch?query=" + query + "&diet=" + diet + "&minCalories=" + minCalories + "&maxCalories="  + maxCalories + "&instructionsRequired=true"),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(GenericRecipeList.class))).thenReturn(response);
 
         GenericRecipeList actualRecipes = recipeService.getRecipesByQueryAndDietAndCalories(query, diet, minCalories, maxCalories);
@@ -174,7 +174,7 @@ class RecipeServiceTest {
     public void getRandomRecipeTest() {
         RecipeList expectedRecipes = new RecipeList();
         ResponseEntity<RecipeList> response = new ResponseEntity<>(expectedRecipes, HttpStatus.OK);
-        when(restTemplate.exchange(eq(API_URL + "/recipes/random?number=1" ),
+        when(restTemplate.exchange(eq(API_URL + "/recipes/random?number=1&instructionsRequired=true" ),
                 eq(HttpMethod.GET), any(HttpEntity.class), eq(RecipeList.class))).thenReturn(response);
 
         RecipeList actualRecipes = recipeService.getRandomRecipe();
