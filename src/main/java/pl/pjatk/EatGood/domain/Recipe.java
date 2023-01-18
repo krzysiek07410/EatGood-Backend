@@ -26,13 +26,13 @@ public class Recipe {
     @ApiModelProperty(value = "List of diets of the recipe.", required = true)
     private List<String> diets;
     @ApiModelProperty(value = "List of ingredients of the recipe.", required = true)
-    private List<Ingredient> ingredients;
+    private IngredientsList extendedIngredients;
 
     public Recipe() {
     }
 
     public Recipe(Integer id, String title, String summary, String instructions, String image, int readyInMinutes,
-                  int servings, List<String> cuisines, List<String> diets, List<Ingredient> ingredients) {
+                  int servings, List<String> cuisines, List<String> diets, IngredientsList ingredients) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -42,7 +42,7 @@ public class Recipe {
         this.servings = servings;
         this.cuisines = cuisines;
         this.diets = diets;
-        this.ingredients = ingredients;
+        this.extendedIngredients = ingredients;
     }
 
     public Integer getId() {
@@ -117,12 +117,12 @@ public class Recipe {
         this.diets = diets;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public IngredientsList getIngredients() {
+        return extendedIngredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredients(IngredientsList ingredients) {
+        this.extendedIngredients = extendedIngredients;
     }
 
     //    @Override
