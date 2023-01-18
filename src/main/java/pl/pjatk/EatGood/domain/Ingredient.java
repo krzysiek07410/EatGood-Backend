@@ -8,14 +8,14 @@ public class Ingredient {
     @ApiModelProperty(value = "Name of the ingredient.", required = true)
     private String name;
     @ApiModelProperty(value = "Amount of the ingredient.", required = true)
-    private int amount;
+    private float amount;
     @ApiModelProperty(value = "Unit of the ingredient.", required = true)
     private String unit;
 
     public Ingredient() {
     }
 
-    public Ingredient(String name, int amount, String unit) {
+    public Ingredient(String name, float amount, String unit) {
         this.name = name;
         this.amount = amount;
         this.unit = unit;
@@ -29,11 +29,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
