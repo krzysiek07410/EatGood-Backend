@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.pjatk.EatGood.domain.User;
 import pl.pjatk.EatGood.exceptionshandlers.LdapAuthenticationException;
 import pl.pjatk.EatGood.service.LdapService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 
+@ApiIgnore
 @Api(value = "Authentication controller", description = "Controller for authentication")
 @RestController
 @RequestMapping("/")

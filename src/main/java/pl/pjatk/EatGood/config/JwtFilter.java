@@ -3,10 +3,7 @@ package pl.pjatk.EatGood.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
-import org.hibernate.annotations.Filter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import pl.pjatk.EatGood.domain.User;
 import pl.pjatk.EatGood.exceptionshandlers.TokenException;
 import pl.pjatk.EatGood.exceptionshandlers.TokenHeaderException;
 

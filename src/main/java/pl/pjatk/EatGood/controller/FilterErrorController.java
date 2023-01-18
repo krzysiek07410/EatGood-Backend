@@ -1,6 +1,5 @@
 package pl.pjatk.EatGood.controller;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -11,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.pjatk.EatGood.exceptionshandlers.TokenException;
 import pl.pjatk.EatGood.exceptionshandlers.TokenExpiredException;
 import pl.pjatk.EatGood.exceptionshandlers.TokenHeaderException;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
+@ApiIgnore
 @Api(value = "Error Controller", description = "Error Controller that handles exceptions")
 @Controller
 public class FilterErrorController implements ErrorController {
