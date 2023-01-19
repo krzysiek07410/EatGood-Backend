@@ -35,8 +35,7 @@ public class FavouriteService {
 
     public FavouriteRecipe findFavouriteRecipeByIdOrSaveFavouriteRecipe(FavouriteRecipe favouriteRecipe) {
         try {
-            return recipeRepository.findById(favouriteRecipe.getId())
-                    .orElseThrow(NotFoundUserException::new);
+            return recipeRepository.findById(favouriteRecipe.getId()).orElseThrow();
         } catch (NotFoundFavouriteRecipeException e) {
             return saveFavouriteRecipe(favouriteRecipe);
         }
