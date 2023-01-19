@@ -122,7 +122,9 @@ public class FavouriteServiceTest {
         String username = "user";
         User user = new User(1, username, Set.of());
 
-        when(userRepository.findUserByUsername(username)).thenReturn(java.util.Optional.of(user));
+//        when(userRepository.findUserByUsername(username)).thenReturn(java.util.Optional.of(user));
+        when(userRepository.findById(favouriteService.getUserIdFromUsername(username)))
+                .thenReturn(java.util.Optional.of(user));
 
         assertThat(favouriteService.findUserByUsernameOrSaveUser(username)).isEqualTo(user);
     }
