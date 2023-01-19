@@ -35,7 +35,7 @@ public class FavouriteService {
 
     public FavouriteRecipe findFavouriteRecipeByIdOrSaveFavouriteRecipe(FavouriteRecipe favouriteRecipe) {
         try {
-            return recipeRepository.findById(favouriteRecipe.getId()).orElseThrow();
+            return findFavouriteRecipeById(favouriteRecipe.getId());
         } catch (NotFoundFavouriteRecipeException e) {
             return saveFavouriteRecipe(favouriteRecipe);
         }
@@ -75,7 +75,7 @@ public class FavouriteService {
 
     public User findUserByUsernameOrSaveUser(String username) {
         try {
-            return userRepository.findUserByUsername(username).orElseThrow();
+            return findUserByUsername(username);
         } catch (NotFoundUserException e) {
             return saveUser(username);
         }
