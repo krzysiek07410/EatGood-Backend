@@ -34,8 +34,11 @@ public class FavouriteService {
     }
 
     public FavouriteRecipe findFavouriteRecipeByIdOrSaveFavouriteRecipe(FavouriteRecipe favouriteRecipe) {
-        return recipeRepository.findById(favouriteRecipe.getId())
-                .orElse(saveFavouriteRecipe(favouriteRecipe));
+        try {
+            return findFavouriteRecipeById(favouriteRecipe.getId());
+        } catch (NotFoundFavouriteRecipeException e) {
+            return saveFavouriteRecipe(favouriteRecipe);
+        }
     }
 
     public User saveUser(String username) {
@@ -71,8 +74,11 @@ public class FavouriteService {
 //    }
 
     public User findUserByUsernameOrSaveUser(String username) {
-        return userRepository.findUserByUsername(username)
-                .orElse(saveUser(username));
+        try {
+            return findUserByUsername(username);
+        } catch (NotFoundUserException e) {
+            return saveUser(username);
+        }
     }
 
     public User addRecipeToUser(Integer recipeId, String username) {
