@@ -60,25 +60,30 @@ public class FavouriteService {
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username)
-                .orElseThrow(NotFoundUserException::new);
-    }
-
-//    public User findUserByIdOrSaveUser(String username) {
-//        return userRepository.findById(getUserIdFromUsername(username))
-//                .orElse(saveUser(username));
+//    public User findUserByUsername(String username) {
+//        return userRepository.findUserByUsername(username)
+//                .orElseThrow(NotFoundUserException::new);
 //    }
 
-    public User findUserByUsernameOrSaveUser(String username) {
-        return userRepository.findUserByUsername(username)
+    public User findUserByIdOrSaveUser(String username) {
+        return userRepository.findById(getUserIdFromUsername(username))
                 .orElse(saveUser(username));
     }
 
+    public User findUserByUsernameOrSaveUser(String username) {
+        return userRepository.findById(getUserIdFromUsername(username))
+                .orElse(saveUser(username));
+    }
+
+//    public User findUserByUsernameOrSaveUser(String username) {
+//        return userRepository.findUserByUsername(username)
+//                .orElse(saveUser(username));
+//    }
+
     public User addRecipeToUser(Integer recipeId, String username) {
         FavouriteRecipe favouriteRecipe = findFavouriteRecipeById(recipeId);
-//        User user = findUserById(getUserIdFromUsername(username));
-        User user = findUserByUsername(username);
+        User user = findUserById(getUserIdFromUsername(username));
+//        User user = findUserByUsername(username);
         user.getFavouriteRecipeSet().add(favouriteRecipe);
         userRepository.save(user);
         return user;
@@ -93,8 +98,8 @@ public class FavouriteService {
     }
 
     public Set<FavouriteRecipe> getUserFavouriteRecipes(String username) {
-//        return findUserById(getUserIdFromUsername(username)).getFavouriteRecipeSet();
-        return findUserByUsername(username).getFavouriteRecipeSet();
+        return findUserById(getUserIdFromUsername(username)).getFavouriteRecipeSet();
+//        return findUserByUsername(username).getFavouriteRecipeSet();
     }
 
     public Set<FavouriteRecipe> getUserFavouriteRecipeById(Integer favouriteRecipeId, String username) {
